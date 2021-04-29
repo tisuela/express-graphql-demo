@@ -1,3 +1,10 @@
+/* 
+
+This is a very basic Express GraphQL API. 
+Adopted from: https://medium.com/codingthesmartway-com-blog/creating-a-graphql-server-with-node-js-and-express-f6dddc5320e1
+
+*/
+
 // we need to import express, which is our web app!
 // without it, what would we be running? Nothing lol.
 const express = require('express')
@@ -14,6 +21,11 @@ const { graphqlHTTP }= require('express-graphql');
 // And that library is handily called graphql.
 var { buildSchema } = require('graphql')
 
+
+// Here we build a very simple schema
+// This schema dictates what GraphQL returns! 
+// It also dictates what can be specified when someone
+// makes a query to our GraphQL API
 var schema = buildSchema(`
     type Query{
         message: String
@@ -21,6 +33,10 @@ var schema = buildSchema(`
 
 `);
 
+// This is commonly called a resolver
+// In our schema, we dictate what happens.
+// The resolve is where the happening happens!
+// It's the how.
 var root = {
     message: () => 'Hello World!'
 };
@@ -43,6 +59,8 @@ app.use(
     })
 );
 
+
+// Have our app listening on port 8000! 
 app.listen(
     8000, 
     () => console.log('Express GraphQL API now running on localhost:8000/graphql')
