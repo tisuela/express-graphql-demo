@@ -55,7 +55,7 @@ Since `server.js` is the expected name, you can also run the app with this comma
 npm start
 ```
 
-**Now your server is running on [localhost:8080](http://localhost:8080**)
+**Now your server is running on [localhost:8080](http://localhost:8080)**
 
 Note that the port is now `8080`! It is a different port so that you can run both servers concurrently to compare them. 
 
