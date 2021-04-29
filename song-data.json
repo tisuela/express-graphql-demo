@@ -2,16 +2,16 @@
     "A": {
         "id": "A",
         "title": "Give Me That Joy",
-        "artist": "Terrain"
+        "artistName": "Terrain"
     },
     "B": {
         "id": "B",
         "title": "Light It Up",
-        "artist": "Terrain"
+        "artistName": "Terrain"
     },
     "C": {
         "id": "C",
         "title": "Chug Jug With You",
-        "artist": "LeviathanJPTV"
+        "artistName": "LeviathanJPTV"
     }
 }
