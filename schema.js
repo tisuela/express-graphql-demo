@@ -8,8 +8,14 @@ const {
     GraphQLNonNull
   } = require('graphql');
 
+
+// Our data comes from some JSON files
+// Usually, it will come from a database or an API! 
 const songData = require ('./song-data.json');
 const artistData = require ('./artist-data.json');
+
+
+// --- Defining Song --- //
 
 const songType = new GraphQLObjectType({
     name: 'Song',
@@ -27,7 +33,10 @@ const songType = new GraphQLObjectType({
     })
 });
 
-// Song Resolvers! //
+// --- Song Resolvers! --- //
+
+// These functions will be used as resolvers
+// You'll see them being called in queryType
 
 function getSong(songID) {
     return songData[songID] ? songData[songID]: null;
@@ -37,7 +46,7 @@ function getAllSongs(){
     return Object.values(songData);
 };
 
-// A new type is approaching! It's an Artist Type :O
+// --- A new type is approaching! It's an Artist Type :O --- //
 
 const artistType = new GraphQLObjectType({
     name: 'Artist',
@@ -59,7 +68,7 @@ const artistType = new GraphQLObjectType({
 });
 
 
-// Artist Resolvers! //
+// --- Artist Resolvers! --- //
 
 function getArtist(artistName) {
     return artistData[artistName] ? artistData[artistName]: null;
@@ -82,7 +91,10 @@ function getSongByArtist(artistName){
 }
 
 
+// --- Define Query Type --- //
 
+// queryType is another GraphQLObjectType, but it's special!
+// It wraps all of our queries together!
 const queryType = new GraphQLObjectType({
     name: 'Query',
     fields: () =>  ({
@@ -102,6 +114,8 @@ const queryType = new GraphQLObjectType({
             type: songType,
 
             // specify our arguments, which is just "id"
+            // the ID type can be an integer or a string! 
+            // the correct term would be "scalar" type. 
             args: {
                 id: { type: GraphQLNonNull(GraphQLID), description: "A Song" }
             },
@@ -122,6 +136,7 @@ const queryType = new GraphQLObjectType({
             }
         },
 
+        // get an artist by their name
         artist: {
             type: artistType,
             args: {
@@ -139,5 +154,4 @@ const queryType = new GraphQLObjectType({
 
 
 const schema = new GraphQLSchema({query: queryType});
-
 module.exports = {schema}
