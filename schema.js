@@ -3,27 +3,37 @@ const {
     GraphQLString,
     GraphQLID,
     GraphQLSchema,
-    GraphQLFloat,
+    GraphQLInt,
     GraphQLList,
     GraphQLNonNull
   } = require('graphql');
 
 const songData = require ('./song-data.json');
-
+const artistData = require ('./artist-data.json');
 
 const songType = new GraphQLObjectType({
     name: 'Song',
     fields: () => ({
         id: { type: GraphQLID },
-        title: { type: GraphQLString }
+        title: { type: GraphQLString },
+        artist: { type: GraphQLString }
     })
 });
 
-
 function getSong(songID) {
-    console.log(songData);
-    console.log(songID);
     return songData[songID] ? songData[songID]: null;
+};
+
+const artistType = new GraphQLObjectType({
+    name: 'Artist',
+    fields: () => ({
+        name: { type: GraphQLString },
+        monthlyListeners: { type: GraphQLInt }
+    })
+});
+
+function getArtist(artistName) {
+    return artistData[artistName] ? artistData[artistName]: null;
 
 };
 
@@ -39,7 +49,18 @@ const queryType = new GraphQLObjectType({
                 },
 
                 resolve: (_, {id}) => {
-                    return getSong(id)
+                    return getSong(id);
+                }
+
+        },
+        artist: {
+            type: artistType,
+            args: {
+                name: { type: GraphQLNonNull(GraphQLString), description: "An Artist" }
+                },
+
+                resolve: (_, {name}) => {
+                    return getArtist(name);
                 }
 
         }
